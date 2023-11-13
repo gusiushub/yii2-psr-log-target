@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-18.04
+          - ubuntu-latest
           - windows-latest
 
         php-version:
@@ -29,7 +29,6 @@ jobs:
           - 7.2
           - 7.3
           - 7.4
-          - 8.1
 
     steps:
       - name: Checkout
@@ -88,9 +87,3 @@ jobs:
       - name: Run tests with phpunit without coverage on Windows
         if: matrix.os == 'windows-latest'
         run: vendor/bin/phpunit
-
-      - name: Upload code coverage scrutinizer
-        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.1'
-        run: |
-          wget https://scrutinizer-ci.com/ocular.phar
-          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
